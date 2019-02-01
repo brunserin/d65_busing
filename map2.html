@@ -58,7 +58,7 @@ blue color used for the buttons and the navigation bar: #3887be
     }
 
     #menu a.active:hover {
-        background: #3074a4;
+        background: #ff0;
     }
     /* css for the blue bar at the top*/
     #nav_bar {
@@ -634,46 +634,45 @@ blue color used for the buttons and the navigation bar: #3887be
             "icon-image": "{icon}-11",
         }
     });    
-    // //district lines
-    // map.addLayer({
-    //     "id": "route",
-    //     "type": "line",
-    //     "source": {
-    //         "type": "geojson",
-    //         "data": {
-    //             "type": "Feature",
-    //             "properties": {},
-    //             "geometry": {
-    //                 "type": "LineString",
-    //                 "coordinates": [
-    //                     [-87.679649, 42.071716], 
-    //                     [-87.682768, 42.071850], 
-    //                     [-87.682918, 42.068719],
-    //                     [-87.729095, 42.069171], 
-    //                     [-87.729288, 42.069578], 
-    //                     [-87.732325, 42.068739], 
-    //                     [-87.732369, 42.062500], 
-    //                     [-87.727407, 42.062456], //harrison and crawford
-    //                     [-87.727830, 42.037163], 
-    //                     [-87.710899, 42.037293], 
-    //                     [-87.709539, 42.019039],
-    //                     [-87.673389, 42.019332], 
-    //                     [-87.678055, 42.022995],
-    //                     [-87.665074, 42.023019]
-    //                 ]
-    //             }
-    //         }
-    //     },
-    //     "layout": {
-    //         "line-join": "round",
-    //         "line-cap": "round"
-    //     },
-    //     "paint": {
-    //         "line-color": "#888",
-    //         "line-width": 5
-    //     }
-    // });
-    
+    //district lines
+    map.addLayer({
+        "id": "route",
+        "type": "line",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [
+                        [-87.679649, 42.071716], 
+                        [-87.682768, 42.071850], 
+                        [-87.682918, 42.068719],
+                        [-87.729095, 42.069171], 
+                        [-87.729288, 42.069578], 
+                        [-87.732325, 42.068739], 
+                        [-87.732369, 42.062500], 
+                        [-87.727407, 42.062456], //harrison and crawford
+                        [-87.727830, 42.037163], 
+                        [-87.710899, 42.037293], 
+                        [-87.709539, 42.019039],
+                        [-87.673389, 42.019332], 
+                        [-87.678055, 42.022995],
+                        [-87.665074, 42.023019]
+                    ]
+                }
+            }
+        },
+        "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+        },
+        "paint": {
+            "line-color": "#888",
+            "line-width": 5
+        }
+    });
     //symbols for schools
     map.addLayer({
         "id": "Schools",
@@ -693,7 +692,7 @@ blue color used for the buttons and the navigation bar: #3887be
                     "properties": 
                     {
                         'title': "Lincolnwood",
-                        "description": "<strong>Lincolnwood Elementary School</strong> <p> 2600 Colfax St, Evanston, IL 60201 </p>",
+                        "description": "<strong>Lincolnwood Elementary School</strong> <p> 7 students over capacity </p>",
                         "icon": "school"
                     }, 
                 },
@@ -829,9 +828,9 @@ blue color used for the buttons and the navigation bar: #3887be
             "text-anchor": "top"
         }
     });
-    //orrington 
+//polygon 1
     map.addLayer({
-        "id": "orrington",
+        "id": "polygon1",
         "type": "fill",
         "source": {
             "type": "geojson",
@@ -841,42 +840,24 @@ blue color used for the buttons and the navigation bar: #3887be
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-87.679649, 42.071716],
-                        [-87.682768, 42.071850],
-                        [-87.682918, 42.068719],
-                        [-87.693709, 42.068788],
-                        [-87.693709, 42.068788],
-                        [-87.693897, 42.064290], //ashland and central 
-                        [-87.692079, 42.064216],
-                        [-87.691951, 42.060228],
-                        [-87.694381, 42.059123],
-                        [-87.691619, 42.055753],
-                        [-87.692845, 42.053922],
-                        [-87.692886, 42.052261],
-                        [-87.693573, 42.052176],
-                        [-87.693539, 42.050304],
-                        [-87.688290, 42.050304],
-                        [-87.686904, 42.055741],
-                        [-87.684669, 42.055781],
-                        [-87.684578, 42.058442], 
-                        [-87.677161, 42.058349],
-                        [-87.677006, 42.063926],
-                        [-87.675209, 42.063978], 
-                        [-87.677327, 42.068103],
-                        [-87.679649, 42.071716]
+                        [-87.717766, 42.066408],
+                        [-87.716533, 42.066389],
+                        [-87.716545, 42.065642],
+                        [-87.717782, 42.065659],
+                        [-87.717766, 42.066408]
                     ]]
                 }
             }
         },
         "layout": {},
         "paint": {
-            "fill-color": "#088",
+            "fill-color": "#86F",
             "fill-opacity": 0.3
         }
     });
-    //dewey 
+// polygon 2
     map.addLayer({
-        "id": "dewey",
+        "id": "polygon2",
         "type": "fill",
         "source": {
             "type": "geojson",
@@ -886,263 +867,11 @@ blue color used for the buttons and the navigation bar: #3887be
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-87.677161, 42.058349], 
-                        [-87.684578, 42.058442], 
-                        [-87.684669, 42.055781], 
-                        [-87.686904, 42.055741],
-                        [-87.688290, 42.050304],
-                        [-87.693552, 42.050288],
-                        [-87.693581, 42.048644],
-                        [-87.698923, 42.048370],
-                        [-87.699204, 42.041134],
-                        [-87.682160, 42.041236],
-                        [-87.680414, 42.039281],
-                        [-87.670487, 42.039154],
-                        [-87.670687, 42.041066],
-                        [-87.671517, 42.042532],
-                        [-87.674365, 42.050123],
-                        [-87.677358, 42.051056],
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#907",
-            "fill-opacity": 0.3
-        }
-    });
-    //lincoln
-    map.addLayer({
-        "id": "lincoln",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.683612, 42.041194],
-                        [-87.683709, 42.034004],
-                        [-87.682160, 42.033956],
-                        [-87.682345, 42.025500],
-                        [-87.681569, 42.025471],
-                        [-87.681575, 42.022142],
-                        [-87.677047, 42.022118],
-                        [-87.677863, 42.022987],
-                        [-87.665063, 42.022907],
-                        [-87.664977, 42.023130],
-                        [-87.664977, 42.023130],
-                        [-87.666930, 42.026661],
-                        [-87.666716, 42.026908],
-                        [-87.668486, 42.028845],
-                        [-87.669398, 42.039118],
-                        [-87.680422, 42.039293],
-                        [-87.682165, 42.041196],
-                        [-87.683612, 42.041194]
-
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#207",
-            "fill-opacity": 0.3
-        }
-    });
-    //oakton
-    map.addLayer({
-        "id": "oakton",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.694697, 42.030778],
-                        [-87.694766, 42.027731],
-                        [-87.690030, 42.027794],
-                        [-87.690152, 42.019537],
-                        [-87.6734450, 42.01940],
-                        [-87.676965, 42.022066],
-                        [-87.681691, 42.022167],
-                        [-87.681573, 42.025469],
-                        [-87.682353, 42.025535],
-                        [-87.682182, 42.033976],
-                        [-87.689990, 42.034063],
-                        [-87.690023, 42.030840],
-                        [-87.694697, 42.030778]
-
-                    
-
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#180",
-            "fill-opacity": 0.3
-        }
-    });
-    //washington
-    map.addLayer({
-        "id": "washington",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.699142, 42.041128],
-                        [-87.699250, 42.037523],
-                        [-87.700778, 42.037456],
-                        [-87.700895, 42.032000],
-                        [-87.699350, 42.032028],
-                        [-87.699368, 42.030701],
-                        [-87.690007, 42.030839],
-                        [-87.689969, 42.034046],
-                        [-87.683734, 42.034019],
-                        [-87.683604, 42.041179],
-                        [-87.699142, 42.041128]
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#4BC",
-            "fill-opacity": 0.3
-        }
-    });
-    //dawes
-    map.addLayer({
-        "id": "dawes",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.700895, 42.032000],
-                        [-87.699350, 42.032028],
-                        [-87.699368, 42.030701],
-                        [-87.694708, 42.030784],
-                        [-87.694782, 42.027699],
-                        [-87.690047, 42.027789],
-                        [-87.690168, 42.019542],
-                        [-87.711224, 42.019128],
-                        [-87.710916, 42.033658],
-                        [-87.700848, 42.033871],
-                        [-87.700895, 42.032000]
-                        
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#800",
-            "fill-opacity": 0.3
-        }
-    });
-    //walker
-    map.addLayer({
-        "id": "walker",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.7274909, 42.055276], //golf road and n crawford 
-                        [-87.716099, 42.055362], //drake and golf rd  
-                        [-87.710053, 42.052776], //golf and prairie 
-                        [-87.710887, 42.051788], //prairie rd and emerson 
-                        [-87.713022, 42.051788], //emerson and ewing 
-                        [-87.713133, 42.049997], //ewing and lyons
-                        [-87.712523, 42.049557], //ewing and lyons curve 
-                        [-87.712565, 42.048191], //church and ewing 
-                        [-87.710506, 42.048206], //church and mccormick 
-                        [-87.710621, 42.044038], //mccormick and lake 
-                        [-87.705330, 42.044107], //pitner and lake 
-                        [-87.705350, 42.041011], //pitner and dempster 
-                        [-87.699134, 42.041104], //dempster and dodge 
-                        [-87.699238, 42.037491], //greenleef and dodge
-                        [-87.700776, 42.037468], //brown and greenleef
-                        [-87.700870, 42.033839], //main and brown 
-                        [-87.710891, 42.033731], //main and mccormick 
-                        [-87.710933, 42.037321], //mccormick and greenleef 
-                        [-87.727835, 42.037174], //crawford and greenleef 
-                        [-87.72749096, 42.05527]
-
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#C61",
-            "fill-opacity": 0.3
-        }
-    });
-    //lincolnwood
-    map.addLayer({
-        "id": "lincolnwood",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.716099, 42.055362], //drake and golf rd  
-                        [-87.710053, 42.052776], //golf and prairie 
-                        [-87.710887, 42.051788], //prairie rd and emerson 
-                        [-87.713022, 42.051788], //emerson and ewing 
-                        [-87.713133, 42.049997], //ewing and lyons
-                        [-87.712523, 42.049557], //ewing and lyons curve 
-                        [-87.712565, 42.048191], //church and ewing 
-                        [-87.710506, 42.048206], //church and mccormick 
-                        [-87.710621, 42.044038], //mccormick and lake 
-                        [-87.705330, 42.044107], //pitner and lake 
-                        [-87.705350, 42.041011], //pitner and dempster 
-                        [-87.699134, 42.041104], //dempster and dodge 
-                        [-87.699000, 42.048379], //church and dodge 
-                        [-87.702494, 42.048350], //grey and church 
-                        [-87.702425, 42.052021], //grey and emerson 
-                        [-87.703583, 42.052004], //emerson and hartrey 
-                        [-87.703503, 42.056836], //hartrey and payne 
-                        [-87.705827, 42.056788], //pioneer and payne
-                        [-87.705742, 42.061474], //curve
-                        [-87.706577, 42.062162], //elm and lincoln 
-                        [-87.706534, 42.064392], //elm and central 
-                        [-87.712950, 42.064456], //central and ewing 
-                        [-87.712929, 42.062074], //ewing and lincoln 
-                        [-87.715818, 42.062050], //lincoln and lincolnwood 
-                        [-87.715800, 42.062630], //lincolnwood and harrison 
-                        [-87.723155, 42.062530], //harrison and hastings 
-                        [-87.723190, 42.058953], //grant and hastings 
-                        [-87.720174, 42.058946], //lawndale and grant 
-                        [-87.720213, 42.055357], //golf and lawndale 
-                        [-87.716099, 42.055362]
+                        [-87.710698, 42.062104],
+                        [-87.70806, 42.062135],
+                        [-87.70809, 42.060823],
+                        [-87.71071, 42.060798],
+                        [-87.710698, 42.062104]
                     ]]
                 }
             }
@@ -1153,9 +882,9 @@ blue color used for the buttons and the navigation bar: #3887be
             "fill-opacity": 0.3
         }
     });
-    //willard
+//polygon 3
     map.addLayer({
-        "id": "willard",
+        "id": "polygon3",
         "type": "fill",
         "source": {
             "type": "geojson",
@@ -1165,95 +894,11 @@ blue color used for the buttons and the navigation bar: #3887be
                 "geometry": {
                     "type": "Polygon",
                     "coordinates": [[
-                        [-87.720213, 42.055357], //golf and lawndale 
-                        [-87.720174, 42.058946], //lawndale and grant 
-                        [-87.723190, 42.058953], //grant and hastings 
-                        [-87.723155, 42.062530], //harrison and hastings
-                        [-87.715800, 42.062630], //lincolnwood and harrison 
-                        [-87.715818, 42.062050], //lincoln and lincolnwood  
-                        [-87.712929, 42.062074], //ewing and lincoln 
-                        [-87.712950, 42.064456], //central and ewing 
-                        [-87.710705, 42.064442], //central and bennett ave 
-                        [-87.710692, 42.066758], //park and bennett ave 
-                        [-87.712606, 42.066758], //ewing and park 
-                        [-87.712584, 42.069064], //ewing and isabella 
-                        [-87.731249, 42.069209], //isabella and old glenview 
-                        [-87.732521, 42.068854], //greeley ave and old glenview 
-                        [-87.732499, 42.062549], //old orchard and greeley 
-                        [-87.727407, 42.062456], //harrison and crawford 
-                        [-87.727513, 42.055258], //golf and crawford 
-                        [-87.720213, 42.055357], //golf and lawndale 
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#86F",
-            "fill-opacity": 0.3
-        }
-    });
-    //willard island 
-    map.addLayer({
-        "id": "willard island",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                        [-87.702468, 42.048319], //grey and church 
-                        [-87.693613, 42.048628], //ashland and church 
-                        [-87.693564, 42.052189], //ashland and emerson 
-                        [-87.702431, 42.052025], //emerson and grey 
-                    ]]
-                }
-            }
-        },
-        "layout": {},
-        "paint": {
-            "fill-color": "#86F",
-            "fill-opacity": 0.3
-        }
-    });
-    //kingsley 
-    map.addLayer({
-        "id": "kingsley",
-        "type": "fill",
-        "source": {
-            "type": "geojson",
-            "data": 
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[
-                      
-                        [-87.703583, 42.052004], //emerson and hartrey 
-                        [-87.703503, 42.056836], //hartrey and payne 
-                        [-87.705827, 42.056788], //pioneer and payne
-                        [-87.705742, 42.061474], //curve
-                        [-87.706577, 42.062162], //elm and lincoln 
-                        [-87.706534, 42.064392], //elm and central 
-                        [-87.710705, 42.064442], //central and bennett ave 
-                        [-87.710692, 42.066758], //park and bennett ave 
-                        [-87.712606, 42.066758], //ewing and park 
-                        [-87.712584, 42.069064], //ewing and isabella 
-                        [-87.693805, 42.068769], //isabella and ashland 
-                        [-87.693897, 42.064290], //ashland and central 
-                        [-87.692107, 42.064272], //central and jackson 
-                        [-87.691939, 42.060216], //jackson and river 
-                        [-87.694418, 42.059080], //river and green bay road 
-                        [-87.691633, 42.055728], //simpson and green bay road 
-                        [-87.692842, 42.053944], //jackson and foster 
-                        [-87.692918, 42.052205], //emerson and jackson 
-                        [-87.703583, 42.052004], //emerson and hartrey 
-
-
-                        
+                        [-87.700387, 42.05923],
+                        [-87.698781, 42.059243],
+                        [-87.698802, 42.0582],
+                        [-87.700399, 42.058166],
+                        [-87.700387, 42.05923]
                     ]]
                 }
             }
@@ -1261,6 +906,195 @@ blue color used for the buttons and the navigation bar: #3887be
         "layout": {},
         "paint": {
             "fill-color": "#003",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon 4 
+    map.addLayer({
+        "id": "polygon4",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.680312, 42.065278],
+                        [-87.679494, 42.065266],
+                        [-87.679526, 42.064095],
+                        [-87.680347, 42.064109],
+                        [-87.680312, 42.065278]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon 5
+    map.addLayer({
+        "id": "polygon5",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.693553, 42.04567],
+                        [-87.692018, 42.045637],
+                        [-87.692044, 42.044253],
+                        [-87.693553, 42.044282],
+                        [-87.693553, 42.04567]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon 6
+    map.addLayer({
+        "id": "polygon6",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.720316, 42.049877],
+                        [-87.71795, 42.04992],
+                        [-87.717983, 42.04815],
+                        [-87.720361, 42.048123],
+                        [-87.720316, 42.049877]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#C61",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon 7 
+    map.addLayer({
+        "id": "polygon7",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.693041, 42.034574],
+                        [-87.691506, 42.034603],
+                        [-87.691516, 42.034033],
+                        [-87.693031, 42.034009],
+                        [-87.693041, 42.034574]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#4BC",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon 8 
+    map.addLayer({
+        "id": "polygon8",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.699426, 42.02657],
+                        [-87.697927, 42.026598],
+                        [-87.697916, 42.026104],
+                        [-87.699439, 42.026074],
+                        [-87.699426, 42.02657]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon9
+    map.addLayer({
+        "id": "polygon9",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.689286, 42.027784],
+                        [-87.688515, 42.027772],
+                        [-87.688541, 42.026745],
+                        [-87.689304, 42.026755],
+                        [-87.689286, 42.027784]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+//polygon10
+    map.addLayer({
+        "id": "polygon10",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": 
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.674963, 42.035633],
+                        [-87.674265, 42.035626],
+                        [-87.674028, 42.033906],
+                        [-87.674735, 42.03393],
+                        [-87.674963, 42.035633]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#207",
             "fill-opacity": 0.3
         }
     });

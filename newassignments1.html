@@ -1,0 +1,2867 @@
+<!DOCTYPE html>
+<!-- Notes
+blue color used for the buttons and the navigation bar: #3887be
+-->
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>D65</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+<!-- CSS information for the map --> 
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:40px; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<!-- CSS information -->
+<style>
+    #menu { 
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 60px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0,0,0,0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+    /* css for the blue bar at the top*/
+    #nav_bar {
+        width: 100%;
+        height: 40px;
+        background-color: #3887be;
+        position: absolute;
+        top: 0;
+    }
+    /* css for the left corner selection option*/
+    #drop_down{
+        width: 30px;
+        height: 30px;
+        background-color: #fff;
+        position: absolute;
+        top: 5px;
+        margin-left: 20px;
+    }
+
+</style>
+
+<!-- HTML --> 
+<nav id="menu"></nav>
+<div id='map'></div>
+<div id='nav_bar'></div>
+<div id="drop_down"></div>
+
+
+
+<!-- Javascript information --> 
+<script>
+    //display the map
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZXJpbmJydW5zIiwiYSI6ImNqajV3MG51bjI0MWkzcG1tZXZycjdyZWcifQ.-X9WJp4KZ6VEGrkDQI3A_w';
+    var map = new mapboxgl.Map(
+    {
+     container: 'map', // container id
+     style: 'mapbox://styles/mapbox/light-v9', // stylesheet location
+    center: [-87.6877, 42.0451], // starting position [lng, lat]
+    zoom: 12.7// starting zoom
+    });
+    
+    map.on('load', function () {
+    //crossing guards
+    // map.addLayer({
+    //     "id": "Crossing Guards",
+    //     "type": "symbol",
+    //     "source": {
+    //         "type": "geojson",
+    //         "data": {
+    //             "type": "FeatureCollection",
+    //             "features": [{
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.717798, 42.067436]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.717787, 42.066417]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.716521, 42.066807]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.717830, 42.064521] //crossing guard central park ave and central st 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.708088, 42.060811] //crossing guard at lincolnwood
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.708131, 42.059099] //crossing guard at lincolnwood
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.710792, 42.059043] //crossing guard at lincolnwood
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.710727, 42.060795] //crossing guard at lincolnwood
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.699119, 42.062221] //crossing guard at kingsley 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.697016, 42.062213] //crossing guard at kingsley 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.693894, 42.062173]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.696737, 42.059314]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.698797, 42.064324]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.684466, 42.061871] //cross guard ridge and lincoln 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.681579, 42.064099]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.680353, 42.064104]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.691977, 42.047143] //crossing at dewey
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.688522, 42.044187] //corwssing at dewey 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.692041, 42.044227]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.690196, 42.044211]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.691945, 42.048601]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.717979, 42.048112] //walker crossing guard
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.710554, 42.048207] //crossing guard at mccormick and church
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.710683, 42.040933] //guard at dempster and mccormick 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.694587, 42.035767] //washington crossing guard
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.694652, 42.033931] //washington guard
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.68997, 42.034052] //crossing 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.689972, 42.032856] //crossing
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.686754, 42.034036] //crossing 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.687580, 42.037638] //crossing 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.682191, 42.033963] //crossing
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.676069, 42.033920]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.674749, 42.033920]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.699468, 42.026606] //dawes
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.699521, 42.024821] //dawes
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.692440, 42.026734] //dawes
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.690080, 42.026742]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.688513, 42.026742]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.685413, 42.026662]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.685338, 42.025602]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.685230, 42.024526]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "police"
+    //                 }
+    //             }]
+    //         }
+    //     },
+    //     "layout": {
+    //         "icon-image": "{icon}-11",
+    //     }
+    // }); 
+    //blockonepoints
+    //hazards
+    // map.addLayer({
+    //     "id": "Hazards",
+    //     "type": "symbol",
+    //     "source": {
+    //         "type": "geojson",
+    //         "data": {
+    //             "type": "FeatureCollection",
+    //             "features": [{
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.728103, 42.064589], 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.717766, 42.058969] // hazard central park ave and grant st
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.717755, 42.056651] // hazard central park ave and payne st                
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.713130, 42.054291] //hazard golf rd and ewing 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.711258, 42.053393] // hazard golf rd and bennett 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.698968, 42.064332]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.701640, 42.056652] //bridge and mccormick hazard
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.686416, 42.068764] //hazard isabella and river
+    //                 },
+    //                 "properties": {
+    //                     "icon": "cirlce"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.690357, 42.054004] //hazard at greenbay and foster
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.684728, 42.052114] //hazard emerson and maple 
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.684719, 42.047863] //hazard maple and davis street
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.679651, 42.046215] //hazard at chicago ave and davis
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.698962, 42.048408] //hazard dodge and church
+    //                 },
+    //                 "properties": {
+    //                     "icon": 'circle'
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.699092, 42.044206] //lake and dodge            
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }, {
+    //                 "type": "Feature",
+    //                 "geometry": {
+    //                     "type": "Point",
+    //                     "coordinates": [-87.718773, 42.040845]
+    //                 },
+    //                 "properties": {
+    //                     "icon": "circle"
+    //                 }
+    //             }]
+    //         }
+    //     },
+    //     "layout": {
+    //         "icon-image": "{icon}-11",
+    //     }
+    // });    
+   
+    //district lines
+    // map.addLayer({
+    //     "id": "route",
+    //     "type": "fill",
+    //     "source": {
+    //         "type": "geojson",
+    //         "data": {
+    //             "type": "Feature",
+    //             "properties": {},
+    //             "geometry": {
+    //                 "type": "Polygon",
+    //                 "coordinates": [
+    //                     [-87.679649, 42.071716], 
+    //                     [-87.682768, 42.071850], 
+    //                     [-87.682918, 42.068719],
+    //                     [-87.729095, 42.069171], 
+    //                     [-87.729288, 42.069578], 
+    //                     [-87.732325, 42.068739], 
+    //                     [-87.732369, 42.062500], 
+    //                     [-87.727407, 42.062456], //harrison and crawford
+    //                     [-87.727830, 42.037163], 
+    //                     [-87.710899, 42.037293], 
+    //                     [-87.709539, 42.019039],
+    //                     [-87.673389, 42.019332], 
+    //                     [-87.678055, 42.022995],
+    //                     [-87.665074, 42.023019]
+    //                 ]
+    //             }
+    //         }
+    //     },
+    //     "layout": {
+    //         "line-join": "round",
+    //         "line-cap": "round"
+    //     },
+    //     "paint": {
+    //         "line-color": "#888",
+    //         "line-width": 5
+    //     }
+    // });
+    //symbols for schools
+    map.addLayer({
+        "id": "Schools",
+        "type": "symbol",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": [
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.70819187164307, 42.06006297403845]
+                    },
+                    "properties": 
+                    {
+                        'title': "Lincolnwood",
+                        "description": "<strong>Lincolnwood Elementary School</strong> <p> 2600 Colfax St, Evanston, IL 60201 </p>",
+                        "icon": "school"
+                    }, 
+                },
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.70009160041808, 42.026064880665885]
+                    },
+                    "properties": 
+                    {
+                        "title": "Dawes",
+                        "icon": "school"
+                    } 
+                }, 
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.695867457294696, 42.060267448791201]
+                    },
+                    "properties": 
+                    {
+                        "title": "Kingsley",
+                        "icon": "school"
+                    } 
+                }, 
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.67523288726807, 42.03449638292082]
+                    },
+                    "properties": 
+                    {
+                        "title": "Lincoln",
+                        "icon": "school"
+                    }
+
+                }, 
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.68716335296631, 42.02638367235954]
+                    },
+                    "properties": 
+                    {
+                        "title": "Oakton",
+                        "icon": "school"
+                    }
+
+                }, 
+                { 
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.679722905159, 42.06568242011978]
+                    },
+                    "properties": 
+                    {
+                        "title": "Orrington",
+                        "icon": "school"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.71662473678589, 42.0672634219576]
+                    },
+                    "properties": 
+                    {
+                        "title": "Willard",
+                        "icon": "school"
+                    }
+
+                },
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.718296794045898, 42.0476490627602]
+                    },
+                    "properties": 
+                    {
+                        "title": "Walker",
+                        "icon": "school"
+                    }
+                }, 
+                {
+                    "type": "Feature",
+                    "geometry": 
+                    {
+                        "type": "Point",
+                        "coordinates": [-87.69412636756897, 42.034018255806735]
+                    },
+                    "properties": 
+                    {
+                        "title": "Washington",
+                        "icon": "school"
+                    }
+
+                }, 
+                {
+                    "type": "Feature", 
+                    "geometry":
+                    {
+                        "type":"Point",
+                        "coordinates": [-87.692014868893395, 42.046155676753997]
+                    },  
+                    "properties": 
+                    {
+                        "title": "Dewey", 
+                        "icon": "school"
+                    }
+                }]
+            }
+        },
+        "layout": {
+            "icon-image": "{icon}-11",
+            "icon-allow-overlap": true,
+            "text-field": "{title}",
+            "text-font": ["Open Sans Regular", "Arial Unicode MS Regular"],
+            "text-offset": [0, 0.6],
+            "text-anchor": "top"
+        }
+    });
+
+    //block lines
+    //block1
+    map.addLayer({
+        "id": "block1",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                            [-87.697444, 42.048408], 
+                            [-87.697668, 42.048403],
+                            [-87.698993, 42.048366],
+                            [-87.698954, 42.0502], 
+                            [-87.697407, 42.050225],
+                            [-87.69502, 42.048453],
+                            [-87.697444, 42.048408]  
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.3
+        }
+    });
+    //block2
+    map.addLayer({
+        "id": "block2",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.697772, 42.04707],
+                        [-87.697668, 42.048403],
+                        [-87.698993, 42.048366],
+                        [-87.699018, 42.047038],
+                        [-87.699079, 42.044208],
+                        [-87.697772, 42.04707]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#003",
+            "fill-opacity": 0.3
+        }
+    });
+    //block3 
+    map.addLayer({
+        "id": "block3",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.697407, 42.050225],
+                        [-87.698917, 42.052078],
+                        [-87.697368, 42.052107],
+                        [-87.697407, 42.050225],
+                        [-87.697407, 42.050231],
+                        [-87.697407, 42.050225]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#003",
+            "fill-opacity": 0.3
+        }
+    });
+    //BLOCK4 MISSING!!!!!!!!!!!!!!!!!!!!!!!
+    //block5
+    map.addLayer({
+        "id": "block5",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.698993, 42.048366],
+                        [-87.698954, 42.0502],
+                        [-87.698917, 42.052078],
+                        [-87.700093, 42.052049],
+                        [-87.70016, 42.048357],
+                        [-87.698993, 42.048366]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block6 
+    map.addLayer({
+        "id": "block6",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.702479, 42.048319],
+                        [-87.703647, 42.048297],
+                        [-87.703612, 42.050098],
+                        [-87.703574, 42.051996],
+                        [-87.70241, 42.052016],
+                        [-87.702479, 42.048319]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block7
+    map.addLayer({
+        "id": "block7",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.701323, 42.048338],
+                        [-87.702479, 42.048319],
+                        [-87.70241, 42.052016],
+                        [-87.702021, 42.052022],
+                        [-87.701268, 42.052036],
+                        [-87.701323, 42.048338]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block8 
+    map.addLayer({
+        "id": "block8",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.70016, 42.048357],
+                        [-87.701323, 42.048338],
+                        [-87.701268, 42.052036],
+                        [-87.700464, 42.052045],
+                        [-87.700093, 42.052049],
+                        [-87.70016, 42.048357]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088", 
+            "fill-opacity": 0.3
+        }
+    });
+    //block9 
+    map.addLayer({
+        "id": "block9",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.72303, 42.069955],
+                        [-87.722718, 42.070427],
+                        [-87.722612, 42.072319],
+                        [-87.724046, 42.071836],
+                        [-87.72401, 42.070928],
+                        [-87.72303, 42.069955]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.5
+        }
+    });
+    //block10
+    map.addLayer({
+        "id": "block10",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.71451, 42.070295],
+                        [-87.716478, 42.070318],
+                        [-87.716459, 42.07153],
+                        [-87.714503, 42.071506],
+                        [-87.71451, 42.070295]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block11
+    map.addLayer({
+        "id": "block11",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.712563, 42.070272],
+                        [-87.71451, 42.070295],
+                        [-87.714503, 42.071506],
+                        [-87.712558, 42.071488],
+                        [-87.712563, 42.070272]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block12
+    map.addLayer({
+        "id": "block12",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.710617, 42.070253],
+                        [-87.712563, 42.070272],
+                        [-87.712558, 42.071488],
+                        [-87.71061, 42.071469],
+                        [-87.710617, 42.070253]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block13
+    map.addLayer({
+        "id": "block13",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.708071, 42.070232],
+                        [-87.710617, 42.070253],
+                        [-87.71061, 42.071469],
+                        [-87.70845, 42.071498],
+                        [-87.708059, 42.071243],
+                        [-87.708071, 42.070232]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block14
+    map.addLayer({
+        "id": "block14",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.716478, 42.070318],
+                        [-87.716459, 42.07153],
+                        [-87.716449, 42.072656],
+                        [-87.717714, 42.072665],
+                        [-87.717759, 42.069103], 
+                        [-87.716499, 42.069084], 
+                        [-87.716478, 42.070318]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block15
+    map.addLayer({
+        "id": "block15",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.714503, 42.071506],
+                        [-87.716459, 42.07153],
+                        [-87.716449, 42.072656],
+                        [-87.714489, 42.072724],
+                        [-87.714503, 42.071506]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block16
+    map.addLayer({
+        "id": "block16",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.712558, 42.071488],
+                        [-87.714503, 42.071506],
+                        [-87.714489, 42.072724],
+                        [-87.712538, 42.073004],
+                        [-87.712558, 42.071488]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block17
+    map.addLayer({
+        "id": "block17",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.71061, 42.071469],
+                        [-87.712558, 42.071488],
+                        [-87.712538, 42.073004],
+                        [-87.711137, 42.073245],
+                        [-87.709434, 42.072119],
+                        [-87.70845, 42.071498],
+                        [-87.71061, 42.071469], 
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block18 - has a weird line in it 
+    map.addLayer({
+        "id": "block18",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.706898, 42.070458],
+                        [-87.708059, 42.071243],
+                        [-87.70843, 42.072825],
+                        [-87.706652, 42.073673],
+                        [-87.702732, 42.068986],
+                        [-87.704981, 42.068953], 
+                        [-87.705054, 42.069018],
+                        [-87.705699, 42.069557],
+                        [-87.706898, 42.070458],
+                        [-87.706838, 42.072023],
+                        [-87.706898, 42.070458]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block19
+    map.addLayer({
+        "id": "block19",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.721721, 42.069155],
+                        [-87.722616, 42.069169],
+                        [-87.723655, 42.069131],
+                        [-87.72303, 42.069955],
+                        [-87.722718, 42.070427],
+                        [-87.721721, 42.069155]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block20
+    map.addLayer({
+        "id": "block20",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.720645, 42.069145],
+                        [-87.721721, 42.069155],
+                        [-87.722718, 42.070427],
+                        [-87.722612, 42.072319],
+                        [-87.720622, 42.072465],
+                        [-87.720645, 42.069145]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block21
+    map.addLayer({
+        "id": "block21",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.718968, 42.069121],
+                        [-87.720645, 42.069145],
+                        [-87.720622, 42.072465],
+                        [-87.718918, 42.072582],
+                        [-87.718968, 42.069121]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block22
+    map.addLayer({
+        "id": "block22",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.717759, 42.069103],
+                        [-87.718968, 42.069121],
+                        [-87.718918, 42.072582],
+                        [-87.717714, 42.072665]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block23
+    map.addLayer({
+        "id": "block23",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.715187, 42.069063],
+                        [-87.716499, 42.069084],
+                        [-87.716478, 42.070318],
+                        [-87.71451, 42.070295],
+                        [-87.714518, 42.06906], 
+                        [-87.715187, 42.069063]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block24
+    map.addLayer({
+        "id": "block24",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.713868, 42.069053],
+                        [-87.714518, 42.06906],
+                        [-87.71451, 42.070295],
+                        [-87.712563, 42.070272],
+                        [-87.712571, 42.069037], 
+                        [-87.713868, 42.069053]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block25
+    map.addLayer({
+        "id": "block25",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.710628, 42.069017],
+                        [-87.712571, 42.069037],
+                        [-87.712563, 42.070272],
+                        [-87.710617, 42.070253],
+                        [-87.710628, 42.069017]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block26
+    map.addLayer({
+        "id": "block26",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.715206, 42.067914],
+                        [-87.715187, 42.069063],
+                        [-87.716499, 42.069084],
+                        [-87.716527, 42.06678],
+                        [-87.715222, 42.066768], 
+                        [-87.715206, 42.067914]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.3
+        }
+    });
+    //block27
+    map.addLayer({
+        "id": "block27",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.71388, 42.067899],
+                        [-87.713868, 42.069053],
+                        [-87.714518, 42.06906],
+                        [-87.715187, 42.069063],
+                        [-87.715206, 42.067914],
+                        [-87.71388, 42.067899]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block28
+    map.addLayer({
+        "id": "block28",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.712589, 42.067907],
+                        [-87.712571, 42.069037],
+                        [-87.713868, 42.069053],
+                        [-87.71388, 42.067899],
+                        [-87.712589, 42.067907]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block29
+    map.addLayer({
+        "id": "block29",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.720669, 42.067449],
+                        [-87.720645, 42.069145],
+                        [-87.721721, 42.069155],
+                        [-87.722616, 42.069169],
+                        [-87.722662, 42.067926],
+                        [-87.722659, 42.067465], 
+                        [-87.720669, 42.067449]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block30
+    map.addLayer({
+        "id": "block30",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.718992, 42.067959],
+                        [-87.718968, 42.069121],
+                        [-87.720645, 42.069145],
+                        [-87.720669, 42.067449],
+                        [-87.717783, 42.067414],
+                        [-87.717759, 42.069103],
+                        [-87.718992, 42.067959]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block31
+    map.addLayer({
+        "id": "block31",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.716527, 42.06678],
+                        [-87.716499, 42.069084],
+                        [-87.717759, 42.069103],
+                        [-87.717783, 42.067414],
+                        [-87.717797, 42.066411],
+                        [-87.716542, 42.066402],
+                        [-87.716527, 42.06678]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block32
+    map.addLayer({
+        "id": "block32",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.710645, 42.067893],
+                        [-87.710628, 42.069017],
+                        [-87.712571, 42.069037],
+                        [-87.712589, 42.067907],
+                        [-87.710645, 42.067893]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block33
+    map.addLayer({
+        "id": "block33",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.708064, 42.068997],
+                        [-87.710628, 42.069017],
+                        [-87.710617, 42.070253],
+                        [-87.708071, 42.070232],
+                        [-87.708064, 42.068997]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.5
+        }
+    });
+    //block35
+    map.addLayer({
+        "id": "block35",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.70242, 42.033815],
+                        [-87.705538, 42.03375],
+                        [-87.705513, 42.034661],
+                        [-87.705399, 42.035573],
+                        [-87.705211, 42.03736],
+                        [-87.703895, 42.037414],
+                        [-87.702339, 42.037442],
+                        [-87.702379, 42.035624],
+                        [-87.705399, 42.035573],
+                        [-87.70242, 42.033815]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+    //block36
+    map.addLayer({
+        "id": "block36",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.699342, 42.032047],
+                        [-87.700902, 42.032021],
+                        [-87.70086, 42.033845],
+                        [-87.699302, 42.033873],
+                        [-87.699329, 42.032681], 
+                        [-87.699342, 42.032047]
+                    ]]
+                }
+            }
+        },
+      "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //missing 37-39 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //block40
+    map.addLayer({
+        "id": "block40",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.701723, 42.030192],
+                        [-87.702502, 42.030176],
+                        [-87.702487, 42.031087],
+                        [-87.702465, 42.031994],
+                        [-87.700902, 42.032021],
+                        [-87.700944, 42.030209],
+                        [-87.701723, 42.030192]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+    
+    //block42
+    map.addLayer({
+        "id": "block42",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.702487, 42.031087],
+                        [-87.704039, 42.031054],
+                        [-87.702465, 42.031994],
+                        [-87.702487, 42.031087]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+    //block43 - SCREWED UP WEIRD ARGGGGGGGG
+    map.addLayer({
+        "id": "block42",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.705538, 42.03375],
+                        [-87.70242, 42.033815],
+                        [-87.702465, 42.031994],
+                        [-87.704019, 42.031966],
+                        [-87.70398, 42.033597], 
+                        [-87.705538, 42.03375]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+    //block50 
+    map.addLayer({
+        "id": "block50",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.699227, 42.037496],
+                        [-87.699191, 42.039307],
+                        [-87.697624, 42.039334],
+                        [-87.697655, 42.037524],
+                        [-87.699227, 42.037496]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#003",
+            "fill-opacity": 0.3
+        }
+    });
+    //block51
+    map.addLayer({
+        "id": "block51",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.697624, 42.039334],
+                        [-87.699191, 42.039307],
+                        [-87.699151, 42.041122],
+                        [-87.69759, 42.041152],
+                        [-87.697624, 42.039334]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block52
+    map.addLayer({
+        "id": "block52",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.694588, 42.035781],
+                        [-87.696142, 42.03573],
+                        [-87.696104, 42.03755],
+                        [-87.69457, 42.037578],
+                        [-87.694588, 42.035781]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block53
+    map.addLayer({
+        "id": "block53",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.692997, 42.037605],
+                        [-87.69457, 42.037578],
+                        [-87.694581, 42.038739],
+                        [-87.693663, 42.038755],
+                        [-87.692979, 42.038765],
+                        [-87.692997, 42.037605]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+    //block54
+    map.addLayer({
+        "id": "block54",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.696142, 42.03573],
+                        [-87.696104, 42.03755],
+                        [-87.697655, 42.037524],
+                        [-87.697693, 42.035704],
+                        [-87.696142, 42.03573]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#003",
+            "fill-opacity": 0.3
+        }
+    });
+    //block55
+    map.addLayer({
+        "id": "block55",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.697693, 42.035704],
+                        [-87.697655, 42.037524],
+                        [-87.699227, 42.037496],
+                        [-87.699264, 42.035678],
+                        [-87.697693, 42.035704]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block56
+    map.addLayer({
+        "id": "block56",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.696104, 42.03755],
+                        [-87.697655, 42.037524],
+                        [-87.697624, 42.039334],
+                        [-87.696071, 42.039361],
+                        [-87.696104, 42.03755]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block57
+    map.addLayer({
+        "id": "block57",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.696071, 42.039361],
+                        [-87.697624, 42.039334],
+                        [-87.69759, 42.041152],
+                        [-87.696038, 42.041177],
+                        [-87.696071, 42.039361]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block58
+    map.addLayer({
+        "id": "block58",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.694575, 42.03939],
+                        [-87.696071, 42.039361],
+                        [-87.696038, 42.041177],
+                        [-87.69454, 42.041204],
+                        [-87.694558, 42.040253], 
+                        [-87.694575, 42.03939]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#4BC",
+            "fill-opacity": 0.3
+        }
+    });
+    //block59
+    map.addLayer({
+        "id": "block59",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.696038, 42.041177],
+                        [-87.69759, 42.041152],
+                        [-87.697556, 42.042766],
+                        [-87.696452, 42.042784],
+                        [-87.696005, 42.042793], 
+                        [-87.696019, 42.042027],
+                        [-87.696038, 42.041177]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#003",
+            "fill-opacity": 0.3
+        }
+    });
+    //block61
+    map.addLayer({
+        "id": "block61",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.69303, 42.03583],
+                        [-87.694588, 42.035781],
+                        [-87.69457, 42.037578],
+                        [-87.692997, 42.037605],
+                        [-87.69303, 42.03583]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#907",
+            "fill-opacity": 0.3
+        }
+    });
+    //block63
+    map.addLayer({
+        "id": "block63",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.699151, 42.041122],
+                        [-87.703807, 42.041043],
+                        [-87.703769, 42.042653],
+                        [-87.702208, 42.042668],
+                        [-87.700664, 42.042696],
+                        [-87.699114, 42.042739],
+                        [-87.699151, 42.041122]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.3
+        }
+    });
+    //block64
+    map.addLayer({
+        "id": "block64",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.703895, 42.037414],
+                        [-87.703807, 42.041043],
+                        [-87.705356, 42.041014],
+                        [-87.705401, 42.039198],
+                        [-87.704063, 42.039223],
+                        [-87.705401, 42.039198],
+                        [-87.705441, 42.037384],
+                        [-87.705211, 42.03736], 
+                        [-87.703895, 42.037414]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block67
+    map.addLayer({
+        "id": "block67",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.709968, 42.052772],
+                        [-87.709426, 42.054737],
+                        [-87.709179, 42.05547],
+                        [-87.710823, 42.055445],
+                        [-87.710839, 42.05453],
+                        [-87.713038, 42.054725],
+                        [-87.71313, 42.054263],
+                        [-87.712828, 42.054119],
+                        [-87.709968, 42.052772],
+                        [-87.709968, 42.052772]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#207",
+            "fill-opacity": 0.3
+        }
+    });
+    //block68
+    map.addLayer({
+        "id": "block68",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.707146, 42.055507],
+                        [-87.709179, 42.05547],
+                        [-87.70872, 42.05674],
+                        [-87.705815, 42.05679],
+                        [-87.70583, 42.055532],
+                        [-87.706473, 42.055519],
+                        [-87.707146, 42.055507]
+                    ]]
+                }
+            }
+        },
+       "layout": {},
+        "paint": {
+            "fill-color": "#86F",
+            "fill-opacity": 0.3
+        }
+    });
+    //block69
+    map.addLayer({
+        "id": "block69",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.709179, 42.05547],
+                        [-87.70872, 42.05674],
+                        [-87.710805, 42.05671],
+                        [-87.710823, 42.055445],
+                        [-87.709179, 42.05547]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#207",
+            "fill-opacity": 0.3
+        }
+    });
+    //block70
+    map.addLayer({
+        "id": "block70",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.699151, 42.041122],
+                        [-87.703807, 42.041043],
+                        [-87.703769, 42.042653],
+                        [-87.702208, 42.042668],
+                        [-87.700664, 42.042696],
+                        [-87.699114, 42.042739],
+                        [-87.699151, 42.041122]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block71
+    map.addLayer({
+        "id": "block71",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.703483, 42.05683],
+                        [-87.705815, 42.05679],
+                        [-87.705799, 42.058064],
+                        [-87.703466, 42.058106],
+                        [-87.703483, 42.05683]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#180",
+            "fill-opacity": 0.3
+        }
+    });
+    //block74
+    map.addLayer({
+        "id": "block74",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.701964, 42.056852],
+                        [-87.703483, 42.05683],
+                        [-87.703466, 42.058106],
+                        [-87.701949, 42.058127],
+                        [-87.701964, 42.056852]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block76
+    map.addLayer({
+        "id": "block76",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.698803, 42.0579],
+                        [-87.696474, 42.059005],
+                        [-87.696698, 42.059298],
+                        [-87.698775, 42.05926],
+                        [-87.698798, 42.058185],
+                        [-87.698803, 42.0579]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#207",
+            "fill-opacity": 0.3
+        }
+    });
+    //block79
+    map.addLayer({
+        "id": "block79",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.697972, 42.070101],
+                        [-87.699664, 42.070118],
+                        [-87.699148, 42.07162],
+                        [-87.697971, 42.071142],
+                        [-87.697972, 42.070101]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block81
+    map.addLayer({
+        "id": "block81",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.697984, 42.068874],
+                        [-87.699682, 42.068897],
+                        [-87.699664, 42.070118],
+                        [-87.697972, 42.070101],
+                        [-87.697984, 42.068874]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block82
+    map.addLayer({
+        "id": "block82",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.699682, 42.068897],
+                        [-87.699664, 42.070118],
+                        [-87.701405, 42.070139],
+                        [-87.701411, 42.06891],
+                        [-87.699682, 42.068897]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block83
+    map.addLayer({
+        "id": "block83",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.701411, 42.06891],
+                        [-87.701405, 42.070139],
+                        [-87.702951, 42.070158],
+                        [-87.702959, 42.07011],
+                        [-87.701969, 42.068925],
+                        [-87.701411, 42.06891]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.5
+        }
+    });
+    //block84
+    map.addLayer({
+        "id": "block84",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.715808, 42.037245],
+                        [-87.717017, 42.037232],
+                        [-87.71697, 42.039037],
+                        [-87.715761, 42.039053],
+                        [-87.715808, 42.037245]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#800",
+            "fill-opacity": 0.3
+        }
+    });
+    //block85
+    map.addLayer({
+        "id": "block85",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.7146, 42.037258],
+                        [-87.715808, 42.037245],
+                        [-87.715761, 42.039053],
+                        [-87.714555, 42.039067],
+                        [-87.7146, 42.037258]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block86
+    map.addLayer({
+        "id": "block86",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.713414, 42.037273],
+                        [-87.7146, 42.037258],
+                        [-87.714555, 42.039067],
+                        [-87.71339, 42.039082],
+                        [-87.713413, 42.038176],
+                        [-87.713414, 42.037273]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block88
+    map.addLayer({
+        "id": "block88",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.717017, 42.037232],
+                        [-87.71697, 42.039037],
+                        [-87.718178, 42.039023],
+                        [-87.718225, 42.037218],
+                        [-87.717017, 42.037232]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block89
+    map.addLayer({
+        "id": "block89",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.715761, 42.039053],
+                        [-87.71697, 42.039037],
+                        [-87.716922, 42.040847],
+                        [-87.715718, 42.040862],
+                        [-87.715761, 42.039053]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block90
+    map.addLayer({
+        "id": "block90",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.714555, 42.039067],
+                        [-87.715761, 42.039053],
+                        [-87.715718, 42.040862],
+                        [-87.714506, 42.040879],
+                        [-87.714555, 42.039067]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block91
+    map.addLayer({
+        "id": "block91",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.71339, 42.039082],
+                        [-87.714555, 42.039067],
+                        [-87.714506, 42.040879],
+                        [-87.714106, 42.040885],
+                        [-87.713345, 42.040896],
+                        [-87.713364, 42.039991],
+                        [-87.71339, 42.039082]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+    //block92
+    map.addLayer({
+        "id": "block92",
+        "type": "fill",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [[
+                        [-87.716922, 42.040847],
+                        [-87.717326, 42.040843],
+                        [-87.717287, 42.042667],
+                        [-87.715682, 42.042687],
+                        [-87.715718, 42.040862],
+                        [-87.716922, 42.040847]
+                    ]]
+                }
+            }
+        },
+        "layout": {},
+        "paint": {
+            "fill-color": "#088",
+            "fill-opacity": 0.3
+        }
+    });
+
+
+
+    
+});
+
+//toggle all the layers for the district
+var toggleDistricts = [ 'dewey', 'orrington', 'lincoln', 'willard', 'lincolnwood', 'walker', 'washington', 'dawes', 'oakton', 'kingsley', 'willard island'];
+
+var link = document.createElement('a');
+link.href = '#';
+link.className = 'active';
+link.textContent = "Districts";
+link.onclick = function (e) {
+    for(var index in toggleDistricts) {
+      var clickedLayer = toggleDistricts[index];
+      e.preventDefault();
+      e.stopPropagation();
+
+      var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+      if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+          this.className = '';
+      } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    }
+
+};
+var layers = document.getElementById('menu');
+layers.appendChild(link);
+
+
+//toggles for hazards and crossing guards 
+var togglehazards = [ 'Hazards', 'Crossing Guards', "Schools" ];
+
+for (var i = 0; i < togglehazards.length; i++) {
+    var id = togglehazards[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+
+    link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+        if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+}
+
+// Create a popup, but don't add it to the map yet.
+    var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'Schools', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var description = e.features[0].properties.description;
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+    });
+
+    map.on('mouseleave', 'Schools', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+</script>
+
+</body>
+</html>
